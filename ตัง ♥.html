@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ตัง ♥</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#fdf0f4;--ink:#3b1630;--soft:#7d5470;--pink:#e0457b;--peach:#ffc9a9;--card:#fff;--line:#f3cfdc;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d0d1a;--ink:#ffe9f1;--soft:#d3a8c0;--pink:#ff7aa5;--peach:#ffb38a;--card:#2b1527;--line:#4a2640;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1d0d1a;--ink:#ffe9f1;--soft:#d3a8c0;--pink:#ff7aa5;--peach:#ffb38a;--card:#2b1527;--line:#4a2640;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Mali","Sarabun","Noto Sans Thai",system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+main{max-width:640px;margin:0 auto;padding:0 24px 64px}
+.hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;position:relative;user-select:none;-webkit-tap-highlight-color:transparent}
+.hero h1{font-size:clamp(7rem,38vw,13rem);line-height:1.15;margin:0;font-weight:700;color:var(--pink);text-shadow:6px 6px 0 var(--peach)}
+.hero p{margin:8px 0 0;font-size:1.25rem;color:var(--soft)}
+.hint{margin-top:28px;font-size:.95rem;color:var(--soft);opacity:.8}
+.heart{position:fixed;pointer-events:none;font-size:28px;animation:up 1.6s ease-out forwards;z-index:5}
+@keyframes up{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-220px) scale(1.4)}}
+section{margin-top:48px}
+h2{font-size:1.5rem;margin:0 0 16px}
+.days{background:var(--card);border:2px solid var(--line);border-radius:28px;padding:28px;text-align:center}
+.days .n{font-size:4rem;font-weight:700;color:var(--pink);line-height:1.2}
+.days label{display:block;margin-top:14px;color:var(--soft);font-size:.95rem}
+.days input{margin-top:6px;font:inherit;padding:8px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+ul{list-style:none;margin:0;padding:0}
+li{padding:18px 0 18px 36px;border-bottom:1px dashed var(--line);position:relative;font-size:1.1rem}
+li::before{content:"♥";position:absolute;left:4px;color:var(--pink)}
+.end{text-align:center;font-size:1.4rem;margin-top:56px}
+.end small{display:block;color:var(--soft);font-size:.9rem;margin-top:6px}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.heart{animation:none;opacity:0}}
+</style>
+</head>
+<body>
+<main>
+  <div class="hero" id="hero" tabindex="0" role="button" aria-label="แตะเพื่อส่งหัวใจ">
+    <h1>ตัง</h1>
+    <p>คนที่ทำให้หัวใจฉันอบอุ่นทุกวัน</p>
+    <div class="hint">แตะที่ชื่อเธอดูนะ ♥</div>
+  </div>
+
+  <section>
+    <div class="days">
+      <div>เราอยู่ด้วยกันมาแล้ว</div>
+      <div class="n" id="n">–</div>
+      <div>วัน</div>
+      <label>วันที่เริ่มต้น<br><input type="date" id="d"></label>
+    </div>
+  </section>
+
+  <section>
+    <h2>เหตุผลที่รักเธอ</h2>
+    <ul>
+      <li>รอยยิ้มของเธอทำให้ทั้งวันสดใสขึ้น</li>
+      <li>อยู่ข้างเธอทีไร ใจก็สงบทุกที</li>
+      <li>เธอทำให้เรื่องธรรมดากลายเป็นเรื่องพิเศษ</li>
+    </ul>
+  </section>
+
+  <div class="end">ขอบคุณที่เป็นตัง ของฉันนะ<small>รักเธอเสมอ ♥</small></div>
+</main>
+<script>
+var hero=document.getElementById('hero');
+function pop(x,y){
+  var e=['♥','💗','💖','💕'];
+  for(var i=0;i<5;i++){
+    var s=document.createElement('span');
+    s.className='heart';s.textContent=e[Math.floor(Math.random()*e.length)];
+    s.style.left=(x+(Math.random()*80-40))+'px';s.style.top=(y+(Math.random()*30-15))+'px';
+    document.body.appendChild(s);
+    setTimeout(function(el){el.remove()},1700,s);
+  }
+}
+hero.addEventListener('click',function(ev){pop(ev.clientX,ev.clientY)});
+hero.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){var r=hero.getBoundingClientRect();pop(r.left+r.width/2,r.top+r.height/2)}});
+var inp=document.getElementById('d'),out=document.getElementById('n');
+function calc(){
+  if(!inp.value){out.textContent='–';return}
+  var diff=Math.floor((Date.now()-new Date(inp.value).getTime())/86400000);
+  out.textContent=diff>=0?diff.toLocaleString('th-TH'):'–';
+}
+try{var saved=localStorage.getItem('tang-start');if(saved)inp.value=saved}catch(e){}
+inp.addEventListener('change',function(){try{localStorage.setItem('tang-start',inp.value)}catch(e){}calc()});
+calc();
+</script>
+</body>
+</html>
